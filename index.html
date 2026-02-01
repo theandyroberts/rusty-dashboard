@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🎩 Henry's Dashboard</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      min-height: 100vh;
+      padding: 40px 20px;
+      color: #fff;
+    }
+    
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    
+    header {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+    
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      background: linear-gradient(90deg, #e94560, #ff6b6b, #ffd93d);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .subtitle {
+      color: #a0a0a0;
+      font-size: 1.1rem;
+    }
+    
+    .apps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+    }
+    
+    .app-card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 28px;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .app-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+    
+    .app-card:hover {
+      transform: translateY(-4px);
+      background: rgba(255, 255, 255, 0.08);
+      border-color: var(--accent);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    }
+    
+    .app-card:hover::before {
+      transform: scaleX(1);
+    }
+    
+    .app-icon {
+      font-size: 2.5rem;
+      margin-bottom: 16px;
+    }
+    
+    .app-name {
+      font-size: 1.4rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    
+    .app-port {
+      font-family: 'SF Mono', Monaco, monospace;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      display: inline-block;
+      margin-bottom: 12px;
+      color: var(--accent);
+    }
+    
+    .app-desc {
+      color: #a0a0a0;
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+    
+    .status {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #4ade80;
+      box-shadow: 0 0 12px #4ade80;
+    }
+    
+    .status.checking {
+      background: #fbbf24;
+      box-shadow: 0 0 12px #fbbf24;
+      animation: pulse 1s infinite;
+    }
+    
+    .status.offline {
+      background: #ef4444;
+      box-shadow: 0 0 12px #ef4444;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+    
+    footer {
+      text-align: center;
+      margin-top: 60px;
+      color: #666;
+      font-size: 0.9rem;
+    }
+    
+    footer a {
+      color: #e94560;
+      text-decoration: none;
+    }
+    
+    /* Card accent colors */
+    .app-card:nth-child(1) { --accent: #e94560; }
+    .app-card:nth-child(2) { --accent: #4ade80; }
+    .app-card:nth-child(3) { --accent: #fbbf24; }
+    .app-card:nth-child(4) { --accent: #60a5fa; }
+    .app-card:nth-child(5) { --accent: #a78bfa; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>🎩 Henry's Dashboard</h1>
+      <p class="subtitle">Local services running on Mac Mini</p>
+    </header>
+    
+    <div class="apps-grid">
+      <a href="http://192.168.40.51:3000" target="_blank" class="app-card" data-port="3000">
+        <div class="status checking"></div>
+        <div class="app-icon">🧠</div>
+        <div class="app-name">Second Brain</div>
+        <div class="app-port">:3000</div>
+        <div class="app-desc">Knowledge base and documentation viewer for notes, projects, and concepts.</div>
+      </a>
+      
+      <a href="http://192.168.40.51:3001" target="_blank" class="app-card" data-port="3001">
+        <div class="status checking"></div>
+        <div class="app-icon">✅</div>
+        <div class="app-name">Henry Tasks</div>
+        <div class="app-port">:3001</div>
+        <div class="app-desc">Kanban task board with TODO, In Progress, and Done columns. Syncs with Clawdbot crons.</div>
+      </a>
+      
+      <a href="http://192.168.40.51:8877" target="_blank" class="app-card" data-port="8877">
+        <div class="status checking"></div>
+        <div class="app-icon">🎮</div>
+        <div class="app-name">Pyramid Hopper</div>
+        <div class="app-port">:8877</div>
+        <div class="app-desc">Q*bert-style game. Use Q/W/A/S to hop around the isometric pyramid!</div>
+      </a>
+      
+      <a href="http://192.168.40.51:18789" target="_blank" class="app-card" data-port="18789">
+        <div class="status checking"></div>
+        <div class="app-icon">🤖</div>
+        <div class="app-name">Clawdbot Gateway</div>
+        <div class="app-port">:18789</div>
+        <div class="app-desc">Clawdbot's local gateway API. Powers the AI assistant behind everything.</div>
+      </a>
+    </div>
+    
+    <footer>
+      <p>Running on <strong>Clawdbot's Mac Mini</strong> • Managed by 🎩 Henry</p>
+    </footer>
+  </div>
+  
+  <script>
+    // Check service status
+    const cards = document.querySelectorAll('.app-card');
+    
+    cards.forEach(card => {
+      const port = card.dataset.port;
+      const status = card.querySelector('.status');
+      
+      // Simple connectivity check via fetch
+      fetch(`http://192.168.40.51:${port}`, { mode: 'no-cors', cache: 'no-store' })
+        .then(() => {
+          status.classList.remove('checking');
+          status.classList.add('online');
+        })
+        .catch(() => {
+          status.classList.remove('checking');
+          status.classList.add('offline');
+        });
+    });
+  </script>
+</body>
+</html>
